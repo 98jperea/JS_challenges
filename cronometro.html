@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronómetro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f9;
+      margin-top: 50px;
+    }
+    h1 {
+      font-size: 36px;
+      color: #333;
+    }
+    .time-display {
+      font-size: 48px;
+      margin: 20px 0;
+      color: #555;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+    button.start {
+      background-color: #28a745;
+    }
+    button.start:hover {
+      background-color: #218838;
+    }
+    button.pause {
+      background-color: #ffc107;
+      color: #333;
+    }
+    button.pause:hover {
+      background-color: #e0a800;
+    }
+    button.reset {
+      background-color: #dc3545;
+    }
+    button.reset:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cronómetro</h1>
+  <div class="time-display" id="timeDisplay">00:00:00</div>
+  <div class="buttons">
+    <button class="start" onclick="startTimer()">Iniciar</button>
+    <button class="pause" onclick="pauseTimer()">Pausar</button>
+    <button class="reset" onclick="resetTimer()">Reiniciar</button>
+  </div>
+
+  <script>
+    let seconds = 0;
+    let timerInterval = null;
+
+    // Formatear tiempo como HH:MM:SS
+    function formatTime(sec) {
+      const hours = Math.floor(sec / 3600).toString().padStart(2, '0');
+      const minutes = Math.floor((sec % 3600) / 60).toString().padStart(2, '0');
+      const seconds = (sec % 60).toString().padStart(2, '0');
+      return `${hours}:${minutes}:${seconds}`;
+    }
+
+    // Actualizar la pantalla
+    function updateDisplay() {
+      document.getElementById('timeDisplay').textContent = formatTime(seconds);
+    }
+
+    // Iniciar el cronómetro
+    function startTimer() {
+      if (timerInterval) return; // Evitar múltiples intervalos
+      timerInterval = setInterval(() => {
+        seconds++;
+        updateDisplay();
+      }, 1000);
+    }
+
+    // Pausar el cronómetro
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    // Reiniciar el cronómetro
+    function resetTimer() {
+      pauseTimer();
+      seconds = 0;
+      updateDisplay();
+    }
+  </script>
+</body>
+</html>
