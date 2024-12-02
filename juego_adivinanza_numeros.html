@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Adivinanza</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f4f4f9;
+    }
+    h1 {
+      color: #333;
+    }
+    .game-container {
+      background: white;
+      padding: 20px;
+      margin: 0 auto;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>¡Adivina el Número!</h1>
+  <div class="game-container">
+    <p>Estoy pensando en un número entre 1 y 100. ¡Adivínalo!</p>
+    <input type="number" id="guessInput" placeholder="Escribe tu número aquí" min="1" max="100">
+    <button onclick="checkGuess()">Adivinar</button>
+    <p class="message" id="message"></p>
+  </div>
+
+  <script>
+    // Número aleatorio entre 1 y 100
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+
+    // Función para verificar la adivinanza
+    function checkGuess() {
+      const userGuess = Number(document.getElementById('guessInput').value);
+      const message = document.getElementById('message');
+      attempts++;
+
+      if (!userGuess || userGuess < 1 || userGuess > 100) {
+        message.textContent = 'Por favor, ingresa un número válido entre 1 y 100.';
+      } else if (userGuess === randomNumber) {
+        message.textContent = `🎉 ¡Felicidades! Adivinaste el número en ${attempts} intentos.`;
+        resetGame();
+      } else if (userGuess < randomNumber) {
+        message.textContent = '🔼 ¡Demasiado bajo! Intenta con un número más alto.';
+      } else {
+        message.textContent = '🔽 ¡Demasiado alto! Intenta con un número más bajo.';
+      }
+    }
+
+    // Función para reiniciar el juego
+    function resetGame() {
+      setTimeout(() => {
+        location.reload();
+      }, 5000); // Reinicia el juego después de 5 segundos
+    }
+  </script>
+</body>
+</html>
